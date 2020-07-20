@@ -1,0 +1,4 @@
+1. Login and get token.
+2. Get signed URL to upload a image. Provide full file name along with extension in the url.
+3. Upload the image using the signed url - PUT method.
+4. Create new feed, provide url = fileName
