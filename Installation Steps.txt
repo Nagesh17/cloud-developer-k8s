@@ -1,0 +1,50 @@
+AWS Pre-requisites-
+1. RDS DB Running - with public access
+2. S3 bucket - non public
+
+=====================================================================
+Env - WIndows 10 setup steps- 
+1. Setup Docker desktop+minikube
+- Install Docker desktop
+- Install minikube - directly start minikube after downloading, it will by default use the docker driver.
+	- minikube start
+2. set docker cli to point to minikube docker daemon-
+@FOR /f "tokens=*" %i IN ('minikube -p minikube docker-env') DO @%i
+
+3. Build docker images->
+cd C:\p\n\cloud-developer\course-03\exercises\udacity-c3-deployment\docker
+docker build -t nmokashe16/reverseproxy .
+
+cd C:\p\n\cloud-developer\course-03\exercises\udacity-c3-frontend
+docker build -t nmokashe16/udacity-frontend
+
+cd C:\p\n\cloud-developer\course-03\exercises\udacity-c3-restapi-feed
+docker build -t nmokashe16/udacity-restapi-feed
+
+cd C:\p\n\cloud-developer\course-03\exercises\udacity-c3-restapi-user
+docker build -t nmokashe16/udacity-restapi-user
+
+
+cd C:\p\n\cloud-developer\course-03\exercises\udacity-c3-deployment\k8s
+Deploy -
+secrets
+configmaps
+deployments
+services
+=======================================================================================
+For API testing->
+login to user+feed pods, then use curl requests to perform the below steps-
+1. Login and get token.
+2. Get signed URL to upload a image. Provide full file name along with extension in the url.
+3. Upload the image using the signed url - PUT method.
+4. Create new feed, provide url = fileName
+
+=============================================================================================
+For accessing from UI->
+Note- port-forward command is not a daemon thread-keep the cmd window open.
+
+k port-forward pod/frontend-7f8b98bbc57mcmn 8100:80 
+k port-forward pod/reverseproxy-74c59fd966-hxjww 8080:8080
+
+Access from browser-
+localhost:8100/
